@@ -1,0 +1,25 @@
+int main(){
+    int x = 10;
+    int i;
+    //Este es un comentario
+
+    for(i=0, i<9, i++){
+        x=x-1;
+        printf("Esta es una iteracion");
+    }
+    // ESTE ES OTRO COMENTARIO
+    if(x=10){
+        x = 10 + 5;
+    }
+    
+    /* otro comentario
+    adsasd
+    dadsasd
+    DASDas
+    */
+    else{
+        printf("Hola mundo! Este, es un ejemplo.");
+        printf("Hola mundo! Este, es otro ejemplo.");
+    }
+    return 0;
+}
