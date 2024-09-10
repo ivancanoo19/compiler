@@ -43,34 +43,33 @@ class Lexer:
             # A continuación, procesamos cada linea actual hasta que ya
             # no tengamos más lineas que procesar
             while line:
-                match = None    #Variable para saber si hicimos match
+                match = None  # Variable para saber si hicimos match
                 
                 # Desempaquetamos la lista de tuplas para acceder a cada elemento (tipo, valor) y la recorremos
                 for token_type, pattern in self.token_patterns:
-                    #
-                    #
-                    #
+                    # re.match para intentar hacer coincidir el patrón con el inicio de la línea
+                    match = re.match(pattern, line)
                     
                     if match:
-                        # Si el token son espacios en blanco o salto de linea, lo ignoramos.
+                        # Si el token es un espacio en blanco o salto de línea, lo ignoramos.
                         # Si pertenece a otro tipo de token
                         if token_type not in ['SKIP', 'NEWLINE']:
-                            # Agregar a la tabla de simbolos
-                            #
-                            #
-                            #
-
-                        # Avanzamos a la siguiente línea, obteniendo la longitud del lexema
-                        # actual. En line, guardaremos una nueva cadena que contiene el resto
-                        # de la línea que aún no ha sido léida.
+                            lexeme = match.group(0)
+                            # Agregamos el token encontrado a la lista de tokens
+                            tokens.append((token_type, lexeme))
+                        
+                        # Avanzamos a la siguiente parte de la línea eliminando el lexema procesado
                         line = line[len(lexeme):]
                         break
 
                 if not match:
-                    # Mostrar mensaje de error
+                    # Mostrar mensaje de error o manejar el caso cuando no hay coincidencias
+                    print(f"Token no reconocido: {line}")
                     break
         
         return tokens
+
+        
 
 
 source_code = """
@@ -105,3 +104,6 @@ int main(){
 
 lexer = Lexer(source_code)
 tokens = lexer.tokenize()
+
+for t in tokens:
+    print(t); 
