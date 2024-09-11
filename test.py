@@ -53,8 +53,8 @@ class Lexer:
                     if match:
                         # Si el token es un espacio en blanco o salto de línea, lo ignoramos.
                         # Si pertenece a otro tipo de token
+                        lexeme = match.group(0)
                         if token_type not in ['SKIP', 'NEWLINE']:
-                            lexeme = match.group(0)
                             # Agregamos el token encontrado a la lista de tokens
                             tokens.append((token_type, lexeme))
                         
