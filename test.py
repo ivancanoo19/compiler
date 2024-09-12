@@ -59,7 +59,7 @@ class Lexer:
         return tokens
 
     def get_token_count(self):
-        result = "\nResumen de conteo de tokens:\n"
+        result = "\nToken count summary:\n"
         for token_type, count in self.token_count.items():
             result += f"{token_type}: {count}\n"
         return result
@@ -67,7 +67,7 @@ class Lexer:
 class LexicalAnalyzerApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Analizador Léxico")
+        self.root.title("Lexical Analyzer")
         self.root.geometry("900x650")
         self.root.config(bg="#2C3E50")
 
@@ -76,35 +76,35 @@ class LexicalAnalyzerApp:
 
     def create_widgets(self):
         # Título principal
-        title_label = tk.Label(self.root, text="Analizador Léxico de Código", bg="#2C3E50", fg="white", font=("Helvetica", 24, "bold"))
+        title_label = tk.Label(self.root, text="Code Lexical Analyzer", bg="#2C3E50", fg="white", font=("Helvetica", 24, "bold"))
         title_label.pack(pady=20)
 
         # Texto de entrada con borde estilizado
         input_frame = tk.Frame(self.root, bg="#34495E", bd=2)
         input_frame.pack(pady=10, padx=20)
-        tk.Label(input_frame, text="Ingrese el código a analizar:", bg="#34495E", fg="white", font=("Arial", 14)).pack(anchor="w", padx=10, pady=5)
+        tk.Label(input_frame, text="Enter the code to analyze:", bg="#34495E", fg="white", font=("Arial", 14)).pack(anchor="w", padx=10, pady=5)
         self.input_text = scrolledtext.ScrolledText(input_frame, height=10, width=80, font=("Consolas", 12), bd=0, relief="flat")
         self.input_text.pack(padx=10, pady=5)
 
         # Botones estilizados
         button_frame = tk.Frame(self.root, bg="#2C3E50")
         button_frame.pack(pady=20)
-        analyze_button = tk.Button(button_frame, text="Analizar Código", command=self.analyze_code, bg="#1ABC9C", fg="white", font=("Arial", 12, "bold"), width=18, bd=0, relief="flat")
+        analyze_button = tk.Button(button_frame, text="Analyze Code", command=self.analyze_code, bg="#1ABC9C", fg="white", font=("Arial", 12, "bold"), width=18, bd=0, relief="flat")
         analyze_button.grid(row=0, column=0, padx=10)
-        file_button = tk.Button(button_frame, text="Cargar desde Archivo", command=self.load_file, bg="#3498DB", fg="white", font=("Arial", 12, "bold"), width=18, bd=0, relief="flat")
+        file_button = tk.Button(button_frame, text="Load from File", command=self.load_file, bg="#3498DB", fg="white", font=("Arial", 12, "bold"), width=18, bd=0, relief="flat")
         file_button.grid(row=0, column=1, padx=10)
 
         # Resultado del análisis con borde y colores
         result_frame = tk.Frame(self.root, bg="#34495E", bd=2)
         result_frame.pack(pady=10, padx=20)
-        tk.Label(result_frame, text="Resultado del análisis léxico:", bg="#34495E", fg="white", font=("Arial", 14)).pack(anchor="w", padx=10, pady=5)
+        tk.Label(result_frame, text="Lexical analysis result:", bg="#34495E", fg="white", font=("Arial", 14)).pack(anchor="w", padx=10, pady=5)
         self.result_text = scrolledtext.ScrolledText(result_frame, height=10, width=80, font=("Consolas", 12), bd=0, relief="flat", state="disabled")
         self.result_text.pack(padx=10, pady=5)
 
     def analyze_code(self):
         input_code = self.input_text.get("1.0", tk.END).strip()
         if not input_code:
-            messagebox.showwarning("Advertencia", "El campo de texto está vacío.")
+            messagebox.showwarning("Warning", "The text field is empty.")
             return
 
         lexer = Lexer(input_code)
