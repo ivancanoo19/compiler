@@ -13,7 +13,6 @@ class Lexer:
             ('LITERAL', r'"[^"]*"'),
             ('OPERATOR', r'[+*/=<>-]'),
             ('PUNCTUATION', r'[{}();,]'),
-            ('COMMENT', r'//.|/\[\s\S]?\/'),
             ('NEWLINE', r'\n'),
             ('SKIP', r'[ \t]+'),
         ]
