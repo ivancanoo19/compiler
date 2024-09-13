@@ -5,7 +5,7 @@ from tkinter import filedialog, messagebox, scrolledtext
 class Lexer:
     def __init__(self, source_code):
         self.source_code = source_code
-        # Definición de patrones de tokens
+        # Definition of token patterns
         self.token_patterns = [
             ('KEYWORD', r'\b(int|if|else|return|for)\b'),
             ('IDENTIFIER', r'\b[a-zA-Z_][a-zA-Z0-9_]*\b'),
@@ -16,44 +16,44 @@ class Lexer:
             ('NEWLINE', r'\n'),
             ('SKIP', r'[ \t]+'),
         ]
-        # Inicializamos el contador de tokens por cada tipo
+        # Initialize the token count for each type
         self.token_count = {token_type: 0 for token_type, _ in self.token_patterns}
 
     def tokenize(self):
-        # Eliminamos comentarios de una o más líneas antes de procesarlo por completo.
+        # Remove single-line or multi-line comments before processing entirely.
         self.source_code = re.sub(r'//.*|/\*[\s\S]*?\*/', '', self.source_code)
 
-        # Dividimos el código fuente en varias líneas, cada línea será procesada.
+        # Split the source code into multiple lines; each line will be processed.
         lines = self.source_code.split('\n')
         
-        # Lista para almacenar los tokens y mostrarlos
+        # List to store the tokens and display them
         tokens = []
         for line in lines:
-            line = line.strip()  # Eliminamos los espacios al inicio y al final de la línea
+            line = line.strip()  # Remove leading and trailing spaces from the line
             if not line:
-                continue  # Si encuentra líneas vacías, las ignoramos y continuamos
+                continue  # If it finds empty lines, ignore and continue
 
             while line:
-                match = None  # Variable para saber si hicimos match
+                match = None  # Variable to know if we made a match
                 
-                # Recorremos cada patrón de token
+                # Iterate over each token pattern
                 for token_type, pattern in self.token_patterns:
                     match = re.match(pattern, line)
                     
                     if match:
                         lexeme = match.group(0)
                         if token_type not in ['SKIP', 'NEWLINE']:
-                            # Agregamos el token encontrado a la lista de tokens
+                            # Add the found token to the list of tokens
                             tokens.append((token_type, lexeme))
-                            # Incrementamos el contador del tipo de token correspondiente
+                            # Increment the corresponding token type counter
                             self.token_count[token_type] += 1
                         
-                        # Avanzamos a la siguiente parte de la línea eliminando el lexema procesado
+                        # Move to the next part of the line by removing the processed lexeme
                         line = line[len(lexeme):]
                         break
 
                 if not match:
-                    # Mostrar mensaje de error o manejar el caso cuando no hay coincidencias
+                    # Display error message or handle the case when no matches are found
                     tokens.append(("ERROR", line))
                     break
         return tokens
@@ -71,22 +71,22 @@ class LexicalAnalyzerApp:
         self.root.geometry("900x650")
         self.root.config(bg="#2C3E50")
 
-        # Crear elementos de la interfaz gráfica
+        # Create graphical interface elements
         self.create_widgets()
 
     def create_widgets(self):
-        # Título principal
+        # Main title
         title_label = tk.Label(self.root, text="Code Lexical Analyzer", bg="#2C3E50", fg="white", font=("Helvetica", 24, "bold"))
         title_label.pack(pady=20)
 
-        # Texto de entrada con borde estilizado
+        # Input text with stylized border
         input_frame = tk.Frame(self.root, bg="#34495E", bd=2)
         input_frame.pack(pady=10, padx=20)
         tk.Label(input_frame, text="Enter the code to analyze:", bg="#34495E", fg="white", font=("Arial", 14)).pack(anchor="w", padx=10, pady=5)
         self.input_text = scrolledtext.ScrolledText(input_frame, height=10, width=80, font=("Consolas", 12), bd=0, relief="flat")
         self.input_text.pack(padx=10, pady=5)
 
-        # Botones estilizados
+        # Stylized buttons
         button_frame = tk.Frame(self.root, bg="#2C3E50")
         button_frame.pack(pady=20)
         analyze_button = tk.Button(button_frame, text="Analyze Code", command=self.analyze_code, bg="#1ABC9C", fg="white", font=("Arial", 12, "bold"), width=18, bd=0, relief="flat")
@@ -94,7 +94,7 @@ class LexicalAnalyzerApp:
         file_button = tk.Button(button_frame, text="Load from File", command=self.load_file, bg="#3498DB", fg="white", font=("Arial", 12, "bold"), width=18, bd=0, relief="flat")
         file_button.grid(row=0, column=1, padx=10)
 
-        # Resultado del análisis con borde y colores
+        # Analysis result with border and colors
         result_frame = tk.Frame(self.root, bg="#34495E", bd=2)
         result_frame.pack(pady=10, padx=20)
         tk.Label(result_frame, text="Lexical analysis result:", bg="#34495E", fg="white", font=("Arial", 14)).pack(anchor="w", padx=10, pady=5)
@@ -110,7 +110,7 @@ class LexicalAnalyzerApp:
         lexer = Lexer(input_code)
         tokens = lexer.tokenize()
 
-        # Mostrar tokens y conteo
+        # Display tokens and count
         result = ""
         for token_type, lexeme in tokens:
             result += f"{token_type}: {lexeme}\n"
@@ -132,7 +132,7 @@ class LexicalAnalyzerApp:
         self.result_text.insert(tk.END, result)
         self.result_text.config(state="disabled")
 
-# Crear ventana raíz de la aplicación
+# Create root window of the application
 root = tk.Tk()
 app = LexicalAnalyzerApp(root)
 root.mainloop()
